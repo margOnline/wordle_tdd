@@ -1,8 +1,8 @@
 # wordle_tdd
 
-This template should help get you started developing with Vue 3 in Vite.
+A project to develop [Wordle](https://www.nytimes.com/games/wordle/index.html) using Vue 3 and Vite.
 
-## Recommended IDE Setup
+## Suggested IDE Setup
 
 [VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
 
@@ -39,8 +39,8 @@ npm run dev
 npm run build
 ```
 
-### Run Unit Tests with [Vitest](https://vitest.dev/)
+### Run Tests with [Vitest](https://vitest.dev/)
 
 ```sh
-npm run test:unit
+npm run test
 ```

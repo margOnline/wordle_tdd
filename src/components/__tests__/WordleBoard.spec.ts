@@ -41,4 +41,13 @@ describe('WordleBoard', () => {
     expect(console.warn).toHaveBeenCalled()
 
   })
+
+  test("A warning is emitted if a guess is submitted all capital letters", async():Promise<void> => {
+    console.warn = vi.fn();
+
+    mount(WordleBoard, { props:{ wordOfTheDay: 'flyer'}})
+
+    expect(console.warn).toHaveBeenCalled()
+
+  })
 })

@@ -34,8 +34,7 @@ describe('WordleBoard', () => {
   })
 
   test("A warning is emitted if a guess is submitted without 5 letters", async():Promise<void> => {
-    const spy = vi.spyOn(console, "warn")
-    spy.mockImplementation(() => null);
+    console.warn = vi.fn();
 
     mount(WordleBoard, { props:{ wordOfTheDay: 'fly'}})
 

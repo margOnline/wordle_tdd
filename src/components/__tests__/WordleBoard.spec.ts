@@ -32,4 +32,14 @@ describe('WordleBoard', () => {
     expect(wrapper.text()).not.toContain(VICTORY_MESSAGE)
     expect(wrapper.text()).not.toContain(UNSUCCESSFUL_MESSAGE)
   })
+
+  test("A warning is emitted if a guess is submitted without 5 letters", async():Promise<void> => {
+    const spy = vi.spyOn(console, "warn")
+    spy.mockImplementation(() => null);
+
+    mount(WordleBoard, { props:{ wordOfTheDay: 'fly'}})
+
+    expect(console.warn).toHaveBeenCalled()
+
+  })
 })

@@ -33,7 +33,7 @@ describe('WordleBoard', () => {
     expect(wrapper.text()).not.toContain(UNSUCCESSFUL_MESSAGE)
   })
 
-  test("A warning is emitted if a guess is submitted without 5 letters", async():Promise<void> => {
+  test("A warning is emitted if the provided word of the day does not have 5 letters", async():Promise<void> => {
     console.warn = vi.fn();
 
     mount(WordleBoard, { props:{ wordOfTheDay: 'fly'}})
@@ -42,7 +42,7 @@ describe('WordleBoard', () => {
 
   })
 
-  test("A warning is emitted if a guess is submitted all capital letters", async():Promise<void> => {
+  test("A warning is emitted if the provide word of the day is not all capital letters", async():Promise<void> => {
     console.warn = vi.fn();
 
     mount(WordleBoard, { props:{ wordOfTheDay: 'flyer'}})
@@ -51,7 +51,7 @@ describe('WordleBoard', () => {
 
   })
 
-  test("A warning is emitted if the guess submitted is not a real world", async():Promise<void> => {
+  test("A warning is emitted if the provided word of the day is not a real word", async():Promise<void> => {
     console.warn = vi.fn();
 
     mount(WordleBoard, { props:{ wordOfTheDay: 'FLFLF'}})
@@ -60,7 +60,7 @@ describe('WordleBoard', () => {
 
   })
 
-  test("No warning is emitted if the provide word of the day is not a real word", async():Promise<void> => {
+  test("No warning is emitted if the provided word of the day is a real word", async():Promise<void> => {
     console.warn = vi.fn();
 
     mount(WordleBoard, { props:{ wordOfTheDay: 'WORKS'}})

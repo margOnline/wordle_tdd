@@ -1,11 +1,14 @@
 <script setup lang="ts">
 import { ref } from "vue"
 import { VICTORY_MESSAGE, UNSUCCESSFUL_MESSAGE } from "@/settings";
+import englishWords from "@/wordleWordList"
 
 defineProps({
   wordOfTheDay: {
     type: String,
-    validator: (wordGiven: string) => wordGiven.length === 5 && wordGiven.toUpperCase() === wordGiven
+    validator: (wordGiven: string) => wordGiven.length === 5
+      && wordGiven.toUpperCase() === wordGiven
+      && englishWords.includes(wordGiven)
   }
 })
 

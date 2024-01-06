@@ -50,4 +50,13 @@ describe('WordleBoard', () => {
     expect(console.warn).toHaveBeenCalled()
 
   })
+
+  test("A warning is emitted if the guess submitted is not a real world", async():Promise<void> => {
+    console.warn = vi.fn();
+
+    mount(WordleBoard, { props:{ wordOfTheDay: 'FLFLF'}})
+
+    expect(console.warn).toHaveBeenCalled()
+
+  })
 })

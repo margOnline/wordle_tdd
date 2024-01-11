@@ -35,7 +35,9 @@ describe('WordleBoard', () => {
   })
   
   describe("Rules for defining the 'word of the day'", () => {
-    test("A warning is emitted if the provided word of the day does not have 5 letters", async():Promise<void> => {
+    test.each(
+      ['fly', 'flyer', 'QWERT']
+    )("If '%s' is provided a warning is emitted", async(wordOfTheDay: string):Promise<void> => {
       console.warn = vi.fn();
   
       mount(WordleBoard, { props:{ wordOfTheDay: 'fly'}})
@@ -43,25 +45,7 @@ describe('WordleBoard', () => {
       expect(console.warn).toHaveBeenCalled()
   
     })
-  
-    test("A warning is emitted if the provide word of the day is not all capital letters", async():Promise<void> => {
-      console.warn = vi.fn();
-  
-      mount(WordleBoard, { props:{ wordOfTheDay: 'flyer'}})
-  
-      expect(console.warn).toHaveBeenCalled()
-  
-    })
-  
-    test("A warning is emitted if the provided word of the day is not a real word", async():Promise<void> => {
-      console.warn = vi.fn();
-  
-      mount(WordleBoard, { props:{ wordOfTheDay: 'FLFLF'}})
-  
-      expect(console.warn).toHaveBeenCalled()
-  
-    })
-  
+
     test("No warning is emitted if the provided word of the day is a real word", async():Promise<void> => {
       console.warn = vi.fn();
   

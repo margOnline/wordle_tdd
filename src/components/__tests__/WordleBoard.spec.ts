@@ -46,11 +46,10 @@ describe('WordleBoard', () => {
         {wordOfTheDay: "tests", reason: "word-of-the-day must be all in uppercase"},
         {wordOfTheDay: "QWERT", reason: "word-of-the-day must be a valid English word"}
       ]
-    )("Since $reason: $wordOfTheDay is invalid, therefore a warning must be emitted", async({wordOfTheDay: string}):Promise<void> => {
+    )("Since $reason: $wordOfTheDay is invalid, therefore a warning must be emitted", async({ wordOfTheDay }):Promise<void> => {
       mount(WordleBoard, {props: {wordOfTheDay}})
-      console.log("word of the day: ", wordOfTheDay)
-      expect(console.warn).toHaveBeenCalled()
-  
+
+      expect(console.warn).toHaveBeenCalled()  
     })
 
     test("No warning is emitted if the provided word of the day is a real word", async():Promise<void> => {

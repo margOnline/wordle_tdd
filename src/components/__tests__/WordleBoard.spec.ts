@@ -1,6 +1,6 @@
 import { DOMWrapper, mount } from '@vue/test-utils'
 import WordleBoard from '../WordleBoard.vue'
-import { VICTORY_MESSAGE, UNSUCCESSFUL_MESSAGE } from "../../settings";
+import { VICTORY_MESSAGE, UNSUCCESSFUL_MESSAGE, WORD_SIZE } from "../../settings";
 import { beforeEach } from "vitest"
 
 describe('WordleBoard', () => {
@@ -62,7 +62,7 @@ describe('WordleBoard', () => {
     })
   })
   describe("Player input", () => {
-    test("player guesses are limited to 5 letters", async() => {
+    test(`player guesses are limited to ${WORD_SIZE} letters`, async() => {
       await playerSubmitsGuess(wordOfTheDay + "EXTRA");
 
       expect(wrapper.text()).toContain(VICTORY_MESSAGE);

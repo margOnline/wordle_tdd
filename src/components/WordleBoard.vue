@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, computed } from "vue"
-import { VICTORY_MESSAGE, UNSUCCESSFUL_MESSAGE } from "@/settings";
+import { VICTORY_MESSAGE, UNSUCCESSFUL_MESSAGE, WORD_SIZE } from "@/settings";
 import englishWords from "@/wordleWordList"
 
 defineProps({
@@ -17,7 +17,7 @@ const formattedGuessInProgress = computed({
     return guessInProgress.value
   },
   set(rawValue: string) {
-    guessInProgress.value = rawValue.slice(0,5)
+    guessInProgress.value = rawValue.slice(0, WORD_SIZE)
   }
 })
 </script>
@@ -25,7 +25,7 @@ const formattedGuessInProgress = computed({
 <template>
   <input
     type="text"
-    maxlength="5"
+    maxlength=WORD_SIZE
     v-model="formattedGuessInProgress"
     @keydown.enter="guessSubmitted=guessInProgress"
   >

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, computed } from "vue"
 import { VICTORY_MESSAGE, UNSUCCESSFUL_MESSAGE, WORD_SIZE } from "@/settings";
-import englishWords from "@/wordleWordList"
+import englishWords from "@/wordleWordList.json"
 
 defineProps({
   wordOfTheDay: {

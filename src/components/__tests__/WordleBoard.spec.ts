@@ -1,6 +1,6 @@
 import { DOMWrapper, mount } from '@vue/test-utils'
 import WordleBoard from '../WordleBoard.vue'
-import { VICTORY_MESSAGE, UNSUCCESSFUL_MESSAGE, WORD_SIZE } from "../../settings";
+import { VICTORY_MESSAGE, UNSUCCESSFUL_MESSAGE, WORD_SIZE, MAX_NUM_OF_GUESSES } from "../../settings";
 import { beforeEach } from "vitest"
 
 describe('WordleBoard', () => {
@@ -26,6 +26,27 @@ describe('WordleBoard', () => {
     test("no end of game messages appears if the user has not made any guesses", async():Promise<void> => {
       expect(wrapper.text()).not.toContain(VICTORY_MESSAGE)
       expect(wrapper.text()).not.toContain(UNSUCCESSFUL_MESSAGE)
+    })
+
+    describe.each([
+      {numberOfGuesses: 0, shouldSeeUnsuccessfulMessage: false},
+      {numberOfGuesses: 1, shouldSeeUnsuccessfulMessage: false},
+      {numberOfGuesses: 2, shouldSeeUnsuccessfulMessage: false},
+      {numberOfGuesses: 3, shouldSeeUnsuccessfulMessage: false},
+      {numberOfGuesses: 4, shouldSeeUnsuccessfulMessage: false},
+      {numberOfGuesses: 5, shouldSeeUnsuccessfulMessage: false},
+      {numberOfGuesses:  MAX_NUM_OF_GUESSES, shouldSeeUnsuccessfulMessage: true},
+    ])(`a defeat message should appear if the player makes incorrect guesses ${ MAX_NUM_OF_GUESSES} times`, ({numberOfGuesses, shouldSeeUnsuccessfulMessage}) => {
+      test.only(`therefore for ${numberOfGuesses} guess(es) a defeat message should ${shouldSeeUnsuccessfulMessage ? "" : "not"} appear`, async() => {
+        for (let i=0; i++; i < numberOfGuesses) {
+          await playerSubmitsGuess("WRONG")
+        }
+        if (shouldSeeUnsuccessfulMessage) {
+          expect(wrapper.text()).toContain(UNSUCCESSFUL_MESSAGE)
+        } else {
+          expect(wrapper.text()).not.toContain(UNSUCCESSFUL_MESSAGE)
+        }
+      })
     })
   })
   
@@ -95,27 +116,6 @@ describe('WordleBoard', () => {
       await playerSubmitsGuess("122")
 
       expect(wrapper.find<HTMLInputElement>('input[type=text]').element.value).toEqual("")
-    })
-  })
-
-  describe.each([
-    {numberOfGuesses: 0, shouldSeeUnsuccessfulMessage: false},
-    {numberOfGuesses: 1, shouldSeeUnsuccessfulMessage: false},
-    {numberOfGuesses: 2, shouldSeeUnsuccessfulMessage: false},
-    {numberOfGuesses: 3, shouldSeeUnsuccessfulMessage: false},
-    {numberOfGuesses: 4, shouldSeeUnsuccessfulMessage: false},
-    {numberOfGuesses: 5, shouldSeeUnsuccessfulMessage: false},
-    {numberOfGuesses: 6, shouldSeeUnsuccessfulMessage: true},
-  ])("a defeat message should appear if the player makes incorrect guesses 6 times", ({numberOfGuesses, shouldSeeUnsuccessfulMessage}) => {
-    test.only(`therefore for ${numberOfGuesses} guess(es) a defeat message should ${shouldSeeUnsuccessfulMessage ? "" : "not"} appear`, async() => {
-      for (let i=0; i++; i < numberOfGuesses) {
-        await playerSubmitsGuess("WRONG")
-      }
-      if (shouldSeeUnsuccessfulMessage) {
-        expect(wrapper.text()).toContain(UNSUCCESSFUL_MESSAGE)
-      } else {
-        expect(wrapper.text()).not.toContain(UNSUCCESSFUL_MESSAGE)
-      }
     })
   })
   

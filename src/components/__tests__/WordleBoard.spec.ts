@@ -37,7 +37,7 @@ describe('WordleBoard', () => {
       {numberOfGuesses: 5, shouldSeeUnsuccessfulMessage: false},
       {numberOfGuesses:  MAX_NUM_OF_GUESSES, shouldSeeUnsuccessfulMessage: true},
     ])(`a defeat message should appear if the player makes incorrect guesses ${ MAX_NUM_OF_GUESSES} times`, ({numberOfGuesses, shouldSeeUnsuccessfulMessage}) => {
-      test.only(`therefore for ${numberOfGuesses} guess(es) a defeat message should ${shouldSeeUnsuccessfulMessage ? "" : "not"} appear`, async() => {
+      test(`therefore for ${numberOfGuesses} guess(es) a defeat message should ${shouldSeeUnsuccessfulMessage ? "" : "not"} appear`, async() => {
         for (let i=0; i++; i < numberOfGuesses) {
           await playerSubmitsGuess("WRONG")
         }
@@ -111,11 +111,23 @@ describe('WordleBoard', () => {
       expect(wrapper.find<HTMLInputElement>('input[type=text]').element.value).toEqual("HRT")
     })
 
-    test("non-letter characters do not render while being typed", async () => {
+    test("non-letter characters do not render while being typed", async() => {
       await playerSubmitsGuess("33")
       await playerSubmitsGuess("122")
 
       expect(wrapper.find<HTMLInputElement>('input[type=text]').element.value).toEqual("")
+    })
+
+    test("all previous guesses made by the player are visible", async() => {
+      const guesses = ["GUESS", "WRONG", "HELLO", "WORLD", "HAPPY", "CODER"]
+
+      for (const guess of guesses){
+        await playerSubmitsGuess(guess)
+      }
+
+      for (const guess of guesses) {
+        expect(wrapper.text()).toContain(guess)
+      }
     })
   })
   

@@ -6,7 +6,7 @@ import englishWords from "@/wordleWordList.json"
 const guessInProgress = ref<string|null>(null)
 const emit = defineEmits<{
   "guess-submitted": [guess: string]
-}>();
+}>()
 
 const formattedGuessInProgress = computed<string>({
   get() {
@@ -28,6 +28,7 @@ function onSubmit() {
   if (!englishWords.includes(formattedGuessInProgress.value)) return;
 
   emit("guess-submitted", formattedGuessInProgress.value);
+  guessInProgress.value = null
 }
 </script>
 

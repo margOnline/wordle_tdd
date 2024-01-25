@@ -23,12 +23,11 @@ const formattedGuessInProgress = computed<string>({
 })
 
 function onSubmit() {
-  guessInProgress.value = null;
-
   if (!englishWords.includes(formattedGuessInProgress.value)) return;
 
   emit("guess-submitted", formattedGuessInProgress.value);
-  guessInProgress.value = null
+
+  guessInProgress.value = null;
 }
 </script>
 
@@ -37,7 +36,7 @@ function onSubmit() {
     <li
       v-for="(letter, index) in formattedGuessInProgress.padEnd(WORD_SIZE, ' ')"
       :key="`${letter}-${index}`"
-      :data="letter"
+      :data-letter="letter"
       class="letter"
       v-text="letter"
     />

@@ -44,6 +44,14 @@ main {
   align-items: center;
   margin-top: 3rem;
 }
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+li {
+  margin-bottom: 0.25rem;
+}
 .end-of-game-message {
   font-size: 3rem;
   animation: end-of-game-message-animation 700ms forwards;

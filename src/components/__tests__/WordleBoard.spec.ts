@@ -38,7 +38,7 @@ describe('WordleBoard', () => {
       {numberOfGuesses:  MAX_NUM_OF_GUESSES, shouldSeeUnsuccessfulMessage: true},
     ])(`a defeat message should appear if the player makes incorrect guesses ${ MAX_NUM_OF_GUESSES} times`, ({numberOfGuesses, shouldSeeUnsuccessfulMessage}) => {
       test(`therefore for ${numberOfGuesses} guess(es) a defeat message should ${shouldSeeUnsuccessfulMessage ? "" : "not"} appear`, async() => {
-        for (let i=0; i++; i < numberOfGuesses) {
+        for (let i=0; i < numberOfGuesses; i++) {
           await playerSubmitsGuess("WRONG")
         }
         if (shouldSeeUnsuccessfulMessage) {

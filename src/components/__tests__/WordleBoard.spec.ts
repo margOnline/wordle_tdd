@@ -136,6 +136,16 @@ describe('WordleBoard', () => {
         expect(wrapper.text()).toContain(guess)
       }
     })
+
+    test("if the game is over, prohibit any more guesses", async() => {
+      const guesses = ["GUESS", "WRONG", "HELLO", "WORLD", "HAPPY", "CODER"]
+
+      for (const guess of guesses){
+        await playerSubmitsGuess(guess)
+      }
+
+      expect(wrapper.find<HTMLInputElement>("input[type=text]")).toBeFalsy()
+    })
   })
   
 })

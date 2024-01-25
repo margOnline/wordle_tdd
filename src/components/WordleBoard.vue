@@ -28,7 +28,7 @@ const isGameOver = computed(() =>
         <guess-view :guess="guess"/>
       </li>
     </ul>
-    <guess-input @guess-submitted="(guess:string) => guessesSubmitted.push(guess)"/>
+    <guess-input v-if="!isGameOver" @guess-submitted="(guess:string) => guessesSubmitted.push(guess)"/>
     <p
       v-if="isGameOver"
       class="end-of-game-message"

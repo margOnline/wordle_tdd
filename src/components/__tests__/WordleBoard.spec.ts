@@ -144,8 +144,14 @@ describe('WordleBoard', () => {
         await playerSubmitsGuess(guess)
       }
 
-      expect(wrapper.find<HTMLInputElement>("input[type=text]")).toBeFalsy()
+      expect(wrapper.find<HTMLInputElement>("input[type=text]")).toBeUndefined
     })
+  })
+
+  test("The player sees 6 lines of input at the start of the game", async() => {
+    const wrapper = mount(WordleBoard, { props: { wordOfTheDay }})
+
+    expect(wrapper.findAll("input[type=text]").length).toEqual(6)
   })
   
 })

@@ -153,5 +153,17 @@ describe('WordleBoard', () => {
 
     expect(wrapper.findAll("input[type=text]").length).toEqual(6)
   })
+
+  test("As the game progresses, display number of guesses remaining", async() => {
+    const wrapper = mount(WordleBoard, { props: { wordOfTheDay }})
+    const guesses = ["GUESS", "WRONG", "HELLO"]
+
+    for (const guess of guesses){
+      await playerSubmitsGuess(guess)
+    }
+    const emptyTiles = wrapper.findAll("input[type=text]").filter(node => node.element.innerHTML === " ")
+    console.log("emptyTyiles: ", wrapper.findAll("input[type=text]"))
+    expect(emptyTiles.length).toEqual((MAX_NUM_OF_GUESSES - guesses.length) * WORD_SIZE)
+  })
   
 })

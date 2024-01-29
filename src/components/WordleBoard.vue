@@ -30,7 +30,7 @@ const isGameOver = computed(() =>
     </ul>
     <div v-if="!isGameOver">
       <guess-input 
-        v-for="(_) in Array(MAX_NUM_OF_GUESSES).fill('')"
+        v-for="(_) in Array(MAX_NUM_OF_GUESSES - guessesSubmitted.length).fill('')"
         @guess-submitted="(guess:string) => guessesSubmitted.push(guess)"
       />
     </div>

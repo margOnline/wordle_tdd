@@ -56,10 +56,10 @@ li:not([data-letter=" "]) {
   }
 }
 $maxWordSize: 5;
-@for $i from 1 through $maxWordSize{
-  .with-flips:nth-of-type($i) {
+@for $i from 1 through $maxWordSize {
+  .with-flips:nth-of-type(#{$i}) {
     animation: flip-card 300ms forwards;
-    animation-delay: #{250*$i}msl;
+    animation-delay: #{250*$i}ms;
   }
 }
 @keyframes flip-card {

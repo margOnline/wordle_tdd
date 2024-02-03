@@ -25,7 +25,7 @@ const isGameOver = computed(() =>
   <main>
     <ul>
       <li v-for="(guess, index) in guessesSubmitted" :key="`${index}-${guess}`">
-        <guess-view :guess="guess"/>
+        <guess-view :guess="guess" should-flip/>
       </li>
     </ul>
     <ul v-if="!isGameOver">

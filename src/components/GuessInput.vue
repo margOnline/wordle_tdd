@@ -5,6 +5,7 @@ import englishWords from "@/wordleWordList.json"
 import GuessView from "@/components/GuessView.vue"
 
 const guessInProgress = ref<string|null>(null)
+const hasFailedValidation = ref<boolean>(false)
 const emit = defineEmits<{
   "guess-submitted": [guess: string]
 }>()
@@ -24,7 +25,11 @@ const formattedGuessInProgress = computed<string>({
 })
 
 function onSubmit() {
-  if (!englishWords.includes(formattedGuessInProgress.value)) return;
+  if (!englishWords.includes(formattedGuessInProgress.value)) {
+    hasFailedValidation.value = true
+    setTimeout(() => hasFailedValidation.value = false, 500)
+    return
+  }
 
   emit("guess-submitted", formattedGuessInProgress.value);
 
@@ -34,7 +39,7 @@ function onSubmit() {
 
 <template>
  
-  <guess-view :guess="formattedGuessInProgress"/>
+  <guess-view :guess="formattedGuessInProgress" :class="{shake: hasFailedValidation}"/>
   <input
     v-model="formattedGuessInProgress"
     type="text"
@@ -49,5 +54,21 @@ function onSubmit() {
 input {
   position: absolute;
   opacity: 0;
+}
+.shake {
+  animation: shake;
+  animation-duration: 100ms;
+  animation-iteration-count: 2;
+}
+@keyframes shake {
+  0% {
+    transform: translateX(-2%);
+  }
+  25% {
+    transform: translateX(0%);
+  }
+  50% {
+    transform: translateX(2%);
+  }
 }
 </style>

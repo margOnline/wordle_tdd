@@ -19,6 +19,12 @@ const isGameOver = computed(() =>
   guessesSubmitted.value.length === MAX_NUM_OF_GUESSES
   || guessesSubmitted.value.includes(props.wordOfTheDay))
 
+const countOfRemainingGuesses = computed(() => {
+  const guessesRemaining = MAX_NUM_OF_GUESSES - guessesSubmitted.value.length
+
+  return isGameOver.value ? guessesRemaining : guessesRemaining - 1
+})
+
 </script>
 
 <template>
@@ -27,10 +33,11 @@ const isGameOver = computed(() =>
       <li v-for="(guess, index) in guessesSubmitted" :key="`${index}-${guess}`">
         <guess-view :guess="guess" should-flip/>
       </li>
-    </ul>
-    <ul v-if="!isGameOver">
-      <li v-for="(_) in Array(MAX_NUM_OF_GUESSES - guessesSubmitted.length).fill('')">
-        <guess-input @guess-submitted="(guess:string) => guessesSubmitted.push(guess)"/>
+      <li>
+        <guess-input :disabled=isGameOver @guess-submitted="(guess:string) => guessesSubmitted.push(guess)"/>
+      </li>
+      <li v-for="i in countOfRemainingGuesses" :key="`remainingGuess-${i}`">
+        <guess-view guess="" />
       </li>
     </ul>
     <p

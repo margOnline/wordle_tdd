@@ -1,7 +1,8 @@
-import { DOMWrapper, mount } from '@vue/test-utils'
+import { mount } from '@vue/test-utils'
 import WordleBoard from '../WordleBoard.vue'
 import { VICTORY_MESSAGE, UNSUCCESSFUL_MESSAGE, WORD_SIZE, MAX_NUM_OF_GUESSES } from "../../settings";
 import { beforeEach } from "vitest"
+import GuessView from '../GuessView.vue';
 
 describe('WordleBoard', () => {
   let wordOfTheDay = "TESTS"
@@ -155,19 +156,24 @@ describe('WordleBoard', () => {
     })
   })
 
-  test("The player sees 6 lines of input at the start of the game", async() => {
-    const wrapper = mount(WordleBoard, { props: { wordOfTheDay }})
+  describe(`There should always be ${MAX_NUM_OF_GUESSES} guess views displayed`, () => {
+    test("at the start of the game", async() => {
+      expect(wrapper.findAllComponents(GuessView)).toHaveLength(MAX_NUM_OF_GUESSES)
+    })
 
-    expect(wrapper.findAll("input[type=text]").length).toEqual(6)
-  })
+    test(`when the player wins the game`, async() => {
+      await playerTypesAndSubmitsGuess(wordOfTheDay)
+      expect(wrapper.findAllComponents(GuessView)).toHaveLength(MAX_NUM_OF_GUESSES)
+    })
 
-  test("As the game progresses, display number of guesses remaining", async() => {
-    const guesses = ["GUESS", "WRONG", "HELLO"]
-
-    for (const guess of guesses){
-      await playerTypesAndSubmitsGuess(guess)
-    }
-    expect(wrapper.findAll("input[type=text]").length).toEqual(MAX_NUM_OF_GUESSES - guesses.length)
+    test(`when the player loses the game`, async() => {
+      const guesses = ["WORLD", "CODER", "HOUSE", "HAPPY", "ABIDE", "TRIAL"]
+      
+      for (const guess in guesses) {
+        await playerTypesAndSubmitsGuess(guess)
+        expect(wrapper.findAllComponents(GuessView)).toHaveLength(MAX_NUM_OF_GUESSES)
+      }
+    })
   })
 
   describe("Providing hints/feedback to the player", () => {

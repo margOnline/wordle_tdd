@@ -61,6 +61,15 @@ ul {
 li:not([data-letter=" "]) {
   animation: pop 100ms;
 }
+[data-letter-feedback=correct] {
+  --back-color: hsl(120, 25%, 65%)
+}
+[data-letter-feedback=almost] {
+  --back-color: hsl(40, 65%, 68%)
+}
+[data-letter-feedback=incorrect] {
+  --back-color: hsl(0, 0%, 70%)
+}
 @keyframes pop {
   0% {
     transform: scale(1);
